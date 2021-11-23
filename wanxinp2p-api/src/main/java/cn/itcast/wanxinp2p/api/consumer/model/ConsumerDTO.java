@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
-
 @Data
 @ApiModel(value = "ConsumerDTO", description = "平台c端用户信息")
 public class ConsumerDTO {

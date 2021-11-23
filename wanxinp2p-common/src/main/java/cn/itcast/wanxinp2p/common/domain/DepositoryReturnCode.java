@@ -1,14 +1,10 @@
 package cn.itcast.wanxinp2p.common.domain;
 
 /**
- * <P>
  * 存管系统返回状态码
- * </p>
- *
- * @author wuzhao@itcast.cn
- * @since 2019/5/17
  */
 public enum DepositoryReturnCode {
+
     /**
      * 成功标记
      */
@@ -28,8 +24,7 @@ public enum DepositoryReturnCode {
     /**
      * 系统内部错误
      */
-    RETURN_CODE_00004("00004", "签名验证失败"),
-    ;
+    RETURN_CODE_00004("00004", "签名验证失败"),;
 
     private String code;
     private String desc;

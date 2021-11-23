@@ -9,7 +9,6 @@ import lombok.Data;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-
 @Data
 @TableName("consumer")
 public class Consumer implements Serializable {

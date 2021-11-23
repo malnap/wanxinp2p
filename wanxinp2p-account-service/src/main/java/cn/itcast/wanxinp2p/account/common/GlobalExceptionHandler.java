@@ -1,4 +1,4 @@
-package cn.itcast.wanxinp2p.consumer.common;
+package cn.itcast.wanxinp2p.account.common;
 
 import cn.itcast.wanxinp2p.common.domain.BusinessException;
 import cn.itcast.wanxinp2p.common.domain.CommonErrorCode;
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 
 	@ResponseBody
 	@ExceptionHandler(value = Exception.class)
-	public RestResponse<Nullable> exceptionGet(HttpServletRequest req, HttpServletResponse response , Exception e) {
+	public RestResponse<Nullable> exceptionGet(HttpServletRequest request, HttpServletResponse response , Exception e) {
 		if (e instanceof BusinessException) {
 			BusinessException be = (BusinessException) e;
 			if (CommonErrorCode.CUSTOM.equals(be.getErrorCode())) {
@@ -33,15 +33,16 @@ public class GlobalExceptionHandler {
 			} else {
 				return new RestResponse<>(be.getErrorCode().getCode(), be.getErrorCode().getDesc());
 			}
-		} else if (e instanceof NoHandlerFoundException) {
+		}else if(e instanceof NoHandlerFoundException){
 			return new RestResponse<>(404, "找不到资源");
-		} else if (e instanceof HttpRequestMethodNotSupportedException) {
+		}else if(e instanceof HttpRequestMethodNotSupportedException){
 			return new RestResponse<>(405, "method 方法不支持");
-		} else if (e instanceof HttpMediaTypeNotSupportedException) {
+		}else if(e instanceof HttpMediaTypeNotSupportedException){
 			return new RestResponse<>(415, "不支持媒体类型");
 		}
 
 		log.error("【系统异常】" + e.getMessage());
 		return new RestResponse<>(CommonErrorCode.UNKNOWN.getCode(), CommonErrorCode.UNKNOWN.getDesc());
 	}
+
 }

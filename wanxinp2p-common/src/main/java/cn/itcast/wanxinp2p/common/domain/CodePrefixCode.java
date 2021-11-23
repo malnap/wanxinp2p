@@ -1,13 +1,7 @@
 package cn.itcast.wanxinp2p.common.domain;
 
 /**
- * <P>
- * 标的编码, 请求流水号等业务标识
- * 可根据业务进行增加
- * </p>
- *
- * @author wuzhao@itcast.cn
- * @since 2019/5/16
+ * 标的编码，请求流水号等业务标识，可根据业务进行增加
  */
 public enum CodePrefixCode {
 
@@ -31,9 +25,8 @@ public enum CodePrefixCode {
      */
     CODE_REQUEST_PREFIX("REQ_","请求流水号前缀");
 
-
-
     private String code;
+
     private String desc;
 
     CodePrefixCode(String code, String desc) {

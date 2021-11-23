@@ -9,7 +9,8 @@ import cn.itcast.wanxinp2p.common.domain.RestResponse;
 public interface ConsumerAPI {
 
     /**
-     * 用户注册  保存用户信息
+     * 用户注册
+     *
      * @param consumerRegisterDTO
      * @return
      */
