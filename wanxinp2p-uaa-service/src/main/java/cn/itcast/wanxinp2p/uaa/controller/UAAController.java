@@ -1,6 +1,5 @@
 package cn.itcast.wanxinp2p.uaa.controller;
 
-
 import cn.itcast.wanxinp2p.uaa.common.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
 @Controller
-public class UUAController {
+public class UAAController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UUAController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UAAController.class);
 
     @GetMapping(value = {"/login"})
     public String login(Model model) {
@@ -38,8 +36,6 @@ public class UUAController {
     public String oauthError() {
         return "/oauth_error";
     }
-
-
 
     @Autowired
     private AuthorizationServerTokenServices tokenService;
@@ -64,6 +60,4 @@ public class UUAController {
         Map<String, ?> rst = accessTokenConverter.convertAccessToken(token, authentication);
         return rst;
     }
-
-
 }

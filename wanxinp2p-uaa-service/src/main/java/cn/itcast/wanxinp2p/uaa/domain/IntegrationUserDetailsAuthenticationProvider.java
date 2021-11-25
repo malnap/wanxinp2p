@@ -28,7 +28,6 @@ public class IntegrationUserDetailsAuthenticationProvider extends AbstractUserDe
         //仅在父类中验证用户的状态
     }
 
-
     protected final UserDetails retrieveUser(String username,
                                              UsernamePasswordAuthenticationToken authentication)
             throws AuthenticationException {
@@ -40,13 +39,9 @@ public class IntegrationUserDetailsAuthenticationProvider extends AbstractUserDe
                         "UserDetailsService returned null, which is an interface contract violation");
             }
             return loadedUser;
-        } catch (UsernameNotFoundException ex) {
+        } catch (UsernameNotFoundException | InternalAuthenticationServiceException ex) {
             throw ex;
-        }
-        catch (InternalAuthenticationServiceException ex) {
-            throw ex;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new InternalAuthenticationServiceException(ex.getMessage(), ex);
         }
     }

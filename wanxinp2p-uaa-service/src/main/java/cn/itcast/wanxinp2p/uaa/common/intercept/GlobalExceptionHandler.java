@@ -1,6 +1,5 @@
 package cn.itcast.wanxinp2p.uaa.common.intercept;
 
-
 import cn.itcast.wanxinp2p.common.domain.BusinessException;
 import cn.itcast.wanxinp2p.common.domain.CommonErrorCode;
 import cn.itcast.wanxinp2p.common.domain.RestResponse;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -29,24 +27,23 @@ public class GlobalExceptionHandler {
 	public RestResponse<Nullable> exceptionGet(HttpServletRequest req, HttpServletResponse response , Exception e) {
 		if (e instanceof BusinessException) {
 			BusinessException be = (BusinessException) e;
-			if(CommonErrorCode.CUSTOM.equals(be.getErrorCode())){
-				return new RestResponse<Nullable>(be.getErrorCode().getCode(), be.getMessage());
-			}else{
-				return new RestResponse<Nullable>(be.getErrorCode().getCode(), be.getErrorCode().getDesc());
+			if (CommonErrorCode.CUSTOM.equals(be.getErrorCode())) {
+				return new RestResponse<>(be.getErrorCode().getCode(), be.getMessage());
+			} else {
+				return new RestResponse<>(be.getErrorCode().getCode(), be.getErrorCode().getDesc());
 			}
-			
-		}else if(e instanceof NoHandlerFoundException){
-			return new RestResponse<Nullable>(404, "找不到资源");
-		}else if(e instanceof HttpRequestMethodNotSupportedException){
-			return new RestResponse<Nullable>(405, "method 方法不支持");
-		}else if(e instanceof AccessDeniedException){
-			return new RestResponse<Nullable>(304, "没有权限访问");
-		}else if(e instanceof HttpMediaTypeNotSupportedException){
-			return new RestResponse<Nullable>(415, "不支持媒体类型");
+		} else if (e instanceof NoHandlerFoundException) {
+			return new RestResponse<>(404, "找不到资源");
+		} else if (e instanceof HttpRequestMethodNotSupportedException) {
+			return new RestResponse<>(405, "method 方法不支持");
+		} else if (e instanceof AccessDeniedException) {
+			return new RestResponse<>(304, "没有权限访问");
+		} else if (e instanceof HttpMediaTypeNotSupportedException) {
+			return new RestResponse<>(415, "不支持媒体类型");
 		}
 		
 		LOGGER.error("【系统异常】{}", e);
-		return  new RestResponse<Nullable>(CommonErrorCode.UNKOWN.getCode(), CommonErrorCode.UNKOWN.getDesc());
+		return new RestResponse<>(CommonErrorCode.UNKNOWN.getCode(), CommonErrorCode.UNKNOWN.getDesc());
 	}
 
 }

@@ -1,11 +1,9 @@
 package cn.itcast.wanxinp2p.uaa.domain;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
-
 
 public class UnifiedUserDetails implements UserDetails {
 
@@ -15,9 +13,9 @@ public class UnifiedUserDetails implements UserDetails {
      * 用户的授权集合
      */
     protected List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-    
+
     private String username;
-    
+
     private String password;
 
     /**
@@ -35,31 +33,26 @@ public class UnifiedUserDetails implements UserDetails {
      */
     private String departmentId;
 
-
     /**
      * 用户的角色权限集合，key为角色，value为角色下权限集合
      */
     private Map<String,List<String>> userAuthorities = new HashMap<>();
-
 
     /**
      * 用户附加信息,json字符串,统一认证透传
      */
     private Map<String, Object> payload = new HashMap<>();
 
-
     public UnifiedUserDetails(String username, String password ) {
         this.username = username;
         this.password = password;
     }
-    
+
     public UnifiedUserDetails(String username, String password , List<GrantedAuthority> authorities) {
     	this.username = username;
     	this.password = password;
         grantedAuthorities.addAll(authorities);
     }
-
-
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
@@ -83,8 +76,7 @@ public class UnifiedUserDetails implements UserDetails {
     public void setPayload(Map<String, Object> payload) {
         this.payload = payload;
     }
-    
-   
+
     /* 账户是否未过期 */
     @Override
     public boolean isAccountNonExpired() {
@@ -108,8 +100,6 @@ public class UnifiedUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 
     public String getMobile() {
         return mobile;
