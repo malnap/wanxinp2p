@@ -6,6 +6,9 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+/**
+ * 配置Spring Security OAuth2采用jwt令牌方式
+ */
 @Configuration
 public class JWTConfig {
 

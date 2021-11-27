@@ -1,14 +1,11 @@
 package cn.itcast.wanxinp2p.uaa.domain;
 
-
 import cn.itcast.wanxinp2p.common.util.DateUtil;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
 public class OauthClientDetails implements Serializable {
-
 
     private static final long serialVersionUID = -6947822646185526939L;
 

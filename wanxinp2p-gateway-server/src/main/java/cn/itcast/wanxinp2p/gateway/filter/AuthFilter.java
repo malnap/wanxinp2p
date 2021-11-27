@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 在过滤器中把令牌中的用户信息取出来并转发给微服务使用
+ */
 @Component
 public class AuthFilter extends ZuulFilter {
 
@@ -23,9 +26,14 @@ public class AuthFilter extends ZuulFilter {
         return true;
     }
 
+    /**
+     * 前置过滤器，可以在请求被路由之前调用
+     *
+     * @return
+     */
     @Override
     public String filterType() {
-        return "pre"; //前置过滤器，可以在请求被路由之前调用
+        return "pre";
     }
 
     @Override
@@ -33,6 +41,11 @@ public class AuthFilter extends ZuulFilter {
         return 0;
     }
 
+    /**
+     * 组装明文token，转发给下游微服务
+     *
+     * @return
+     */
     @Override
     public Object run() {
         //1 获取Spring Security OAuth2的认证信息对象
@@ -43,6 +56,7 @@ public class AuthFilter extends ZuulFilter {
         }
 
         //2 将当前登录的用户以及接入客户端的信息放入Map中
+        // 取出用户信息
         OAuth2Authentication oauth2Authentication = (OAuth2Authentication) authentication;
         Map<String, String> jsonToken = new HashMap<>(oauth2Authentication.getOAuth2Request().getRequestParameters());
 

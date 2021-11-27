@@ -46,6 +46,7 @@ public class IntegrationUserDetailsAuthenticationHandler {
 		accountLoginDTO.setPassword(presentedPassword);
 
 		AccountApiAgent accountApiAgent = (AccountApiAgent) ApplicationContextHelper.getBean(AccountApiAgent.class);
+		assert accountApiAgent != null;
 		RestResponse<AccountDTO> restResponse = accountApiAgent.login(accountLoginDTO);
 
 		// 异常处理
@@ -55,7 +56,7 @@ public class IntegrationUserDetailsAuthenticationHandler {
 
 		// 登陆成功，封装信息到UnifiedUserDetails
 		UnifiedUserDetails unifiedUserDetails = new UnifiedUserDetails(restResponse.getResult().getUsername(),
-				presentedPassword,AuthorityUtils.createAuthorityList());
+														presentedPassword,AuthorityUtils.createAuthorityList());
 		unifiedUserDetails.setMobile(restResponse.getResult().getMobile());
 
 		return unifiedUserDetails;

@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 
 public abstract class StringUtils {
+
     /**
      * An empty immutable <code>String</code> array.
      */

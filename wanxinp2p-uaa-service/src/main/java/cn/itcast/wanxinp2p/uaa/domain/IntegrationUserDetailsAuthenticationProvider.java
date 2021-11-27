@@ -55,11 +55,11 @@ public class IntegrationUserDetailsAuthenticationProvider extends AbstractUserDe
             IntegrationWebAuthenticationDetails webAuthenticationDetails = (IntegrationWebAuthenticationDetails)details;
             domain = webAuthenticationDetails.getDomain();
             authenticationType = webAuthenticationDetails.getAuthenticationType();
-        }else if(details instanceof Map){ //password模式认证
-            Map<String ,String> webAuthenticationDetails = (Map)details;
+        } else if (details instanceof Map) { //password模式认证
+            Map<String, String> webAuthenticationDetails = (Map) details;
             domain = webAuthenticationDetails.get("domain");
             authenticationType = webAuthenticationDetails.get("authenticationType");
-        }else{ //超出预估的情况
+        } else { //超出预估的情况
             throw new InternalAuthenticationServiceException(
                     "WebAuthenticationDetails type is not support");
         }

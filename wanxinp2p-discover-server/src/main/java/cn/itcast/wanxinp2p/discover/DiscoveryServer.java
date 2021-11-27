@@ -1,4 +1,3 @@
-
 package cn.itcast.wanxinp2p.discover;
 
 import org.springframework.boot.SpringApplication;
@@ -11,6 +10,5 @@ public class DiscoveryServer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DiscoveryServer.class, args);
-
 	}
 }

@@ -28,69 +28,72 @@ import java.util.List;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> integrationWebAuthenticationDetailsSource;
+
 	@Bean
 	public IntegrationUserDetailsAuthenticationHandler integrationUserDetailsAuthenticationHandler(){
-		IntegrationUserDetailsAuthenticationHandler authenticationHandler = new IntegrationUserDetailsAuthenticationHandler();
-		return authenticationHandler;
+		return new IntegrationUserDetailsAuthenticationHandler();
 	}
 
 	@Bean
 	public IntegrationUserDetailsAuthenticationProvider integrationUserDetailsAuthenticationProvider(){
-		IntegrationUserDetailsAuthenticationProvider provider = new IntegrationUserDetailsAuthenticationProvider(integrationUserDetailsAuthenticationHandler());
-		return provider;
+		return new IntegrationUserDetailsAuthenticationProvider(integrationUserDetailsAuthenticationHandler());
 	}
 
-	@Autowired
-	private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> integrationWebAuthenticationDetailsSource;
-
-    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(integrationUserDetailsAuthenticationProvider());
     }
     
-
-    //不定义没有password grant_type
-    @Override
+	/**
+	 * 认证管理器，不定义没有grant_type为password
+	 *
+	 * @return
+	 * @throws Exception
+	 */
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/public/**", "/webjars/**", "/v2/**", "/swagger**", "/static/**", "/resources/**");
 		//web.httpFirewall(new DefaultHttpFirewall());//StrictHttpFirewall 去除验url非法验证防火墙
     }
-    
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        
-		http.authorizeRequests()
-        .antMatchers("/login*").permitAll()
-		.antMatchers("/logout*").permitAll()
-		.antMatchers("/druid/**").permitAll()
-		.antMatchers("/hi").permitAll()
-		.anyRequest().authenticated()
-        .and()
-        .formLogin()
-        .loginPage("/login") // 登录页面
-		.authenticationDetailsSource(integrationWebAuthenticationDetailsSource)
-        .loginProcessingUrl("/login.do") // 登录处理url
-        .failureUrl("/login?authentication_error=1")
-		.defaultSuccessUrl("/oauth/authorize")
-        .usernameParameter("username")
-        .passwordParameter("password")
-        .and()
-        .logout()
-        .logoutUrl("/logout.do")
-        .deleteCookies("JSESSIONID")
-        .logoutSuccessUrl("/")
-        .and()
-        .csrf().disable()
-        .exceptionHandling()
-        .accessDeniedPage("/login?authorization_error=2")
-        .and().requestCache().requestCache(getRequestCache(http));
 
+	/**
+	 * 安全拦截机制（最重要）
+	 *
+	 * @param http
+	 * @throws Exception
+	 */
+	@Override
+    protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+			.antMatchers("/login*").permitAll()
+			.antMatchers("/logout*").permitAll()
+			.antMatchers("/druid/**").permitAll()
+			.antMatchers("/hi").permitAll()
+			.anyRequest().authenticated()
+			.and()
+			.formLogin()
+			.loginPage("/login") // 登录页面
+			.authenticationDetailsSource(integrationWebAuthenticationDetailsSource)
+			.loginProcessingUrl("/login.do") // 登录处理url
+			.failureUrl("/login?authentication_error=1")
+			.defaultSuccessUrl("/oauth/authorize")
+			.usernameParameter("username")
+			.passwordParameter("password")
+			.and()
+			.logout()
+			.logoutUrl("/logout.do")
+			.deleteCookies("JSESSIONID")
+			.logoutSuccessUrl("/")
+			.and()
+			.csrf().disable()
+			.exceptionHandling()
+			.accessDeniedPage("/login?authorization_error=2")
+			.and().requestCache().requestCache(getRequestCache(http));
     }
     
     private RequestCache getRequestCache(HttpSecurity http) {
@@ -134,5 +137,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		return new AndRequestMatcher(matchers);
 	}
-
 }

@@ -26,7 +26,7 @@ public class RestOAuthExceptionJacksonSerializer extends StdSerializer<RestOAuth
         String summary = value.getSummary();
         jgen.writeStringField("result", summary);
 
-        if (value.getAdditionalInformation()!=null) {
+        if (value.getAdditionalInformation() != null) {
             for (Map.Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {
                 String key = entry.getKey();
                 String add = entry.getValue();

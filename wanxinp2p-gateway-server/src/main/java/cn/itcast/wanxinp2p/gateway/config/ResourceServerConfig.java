@@ -10,6 +10,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
+/**
+ * Spring Security OAuth2资源服务实现，用于网关对接入客户端的权限拦截，可以指定某个接入客户端只允许访问部分微服务
+ */
 @Configuration
 public class ResourceServerConfig {
 
@@ -31,7 +34,9 @@ public class ResourceServerConfig {
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-            resources.tokenStore(tokenStore).resourceId(RESOURCE_ID).stateless(true);
+            resources.tokenStore(tokenStore)
+                    .resourceId(RESOURCE_ID)
+                    .stateless(true);
         }
 
         @Override
@@ -43,7 +48,6 @@ public class ResourceServerConfig {
                     .antMatchers("/uaa/druid/**").denyAll()
                     .antMatchers("/uaa/**").permitAll();
         }
-
     }
 
     /**
@@ -58,8 +62,11 @@ public class ResourceServerConfig {
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-            resources.tokenStore(tokenStore).resourceId(RESOURCE_ID).stateless(true);
-            resources.authenticationEntryPoint(point).accessDeniedHandler(handler);
+            resources.tokenStore(tokenStore)
+                    .resourceId(RESOURCE_ID)
+                    .stateless(true);
+            resources.authenticationEntryPoint(point)
+                    .accessDeniedHandler(handler);
         }
 
         @Override
@@ -69,8 +76,10 @@ public class ResourceServerConfig {
                     .and()
                     .authorizeRequests()
                     .antMatchers("/consumer/l/**").denyAll()
-                    .antMatchers("/consumer/my/**").access("#oauth2.hasScope('read') and #oauth2.clientHasRole('ROLE_CONSUMER')")
-                    .antMatchers("/consumer/m/**").access("#oauth2.hasScope('read') and #oauth2.clientHasRole('ROLE_ADMIN')")
+                    .antMatchers("/consumer/my/**").access(
+                            "#oauth2.hasScope('read') and #oauth2.clientHasRole('ROLE_CONSUMER')")
+                    .antMatchers("/consumer/m/**").access(
+                            "#oauth2.hasScope('read') and #oauth2.clientHasRole('ROLE_ADMIN')")
                     .antMatchers("/consumer/**").permitAll();
         }
     }

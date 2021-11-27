@@ -1,20 +1,16 @@
 package cn.itcast.wanxinp2p.uaa.config;
 
-
 import cn.itcast.wanxinp2p.uaa.domain.OauthClientDetails;
 import cn.itcast.wanxinp2p.uaa.service.OauthService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 
-
 public class OauthUserApprovalHandler extends TokenStoreUserApprovalHandler {
 
     private OauthService oauthService;
 
-    public OauthUserApprovalHandler() {
-    }
-
+    public OauthUserApprovalHandler() {}
 
     public boolean isApproved(AuthorizationRequest authorizationRequest, Authentication userAuthentication) {
         if (super.isApproved(authorizationRequest, userAuthentication)) {
@@ -26,7 +22,6 @@ public class OauthUserApprovalHandler extends TokenStoreUserApprovalHandler {
 
         OauthClientDetails clientDetails = oauthService.loadOauthClientDetails(authorizationRequest.getClientId());
         return clientDetails != null && clientDetails.trusted();
-
     }
 
     public void setOauthService(OauthService oauthService) {

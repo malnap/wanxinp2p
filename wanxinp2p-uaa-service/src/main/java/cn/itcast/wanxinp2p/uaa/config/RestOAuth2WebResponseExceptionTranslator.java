@@ -18,7 +18,6 @@ public class RestOAuth2WebResponseExceptionTranslator implements WebResponseExce
 
     private ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
 
-
     public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
         Throwable[] causeChain = this.throwableAnalyzer.determineCauseChain(e);
         Exception ase = (OAuth2Exception)this.throwableAnalyzer.getFirstThrowableOfType(OAuth2Exception.class, causeChain);
@@ -113,6 +112,5 @@ public class RestOAuth2WebResponseExceptionTranslator implements WebResponseExce
             return 403;
         }
     }
-
 
 }

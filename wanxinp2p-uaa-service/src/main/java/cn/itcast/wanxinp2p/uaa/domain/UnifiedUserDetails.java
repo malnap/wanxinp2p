@@ -83,7 +83,7 @@ public class UnifiedUserDetails implements UserDetails {
         return true;
     }
 
-    /*账户是否未锁定 */
+    /* 账户是否未锁定 */
     @Override
     public boolean isAccountNonLocked() {
         return true;
@@ -95,7 +95,7 @@ public class UnifiedUserDetails implements UserDetails {
         return true;
     }
 
-    /*账户是否启用,默认true (启用)*/
+    /* 账户是否启用,默认true (启用) */
     @Override
     public boolean isEnabled() {
         return true;
@@ -132,6 +132,5 @@ public class UnifiedUserDetails implements UserDetails {
     public void setUserAuthorities(Map<String, List<String>> userAuthorities) {
         this.userAuthorities = userAuthorities;
     }
-
 
 }

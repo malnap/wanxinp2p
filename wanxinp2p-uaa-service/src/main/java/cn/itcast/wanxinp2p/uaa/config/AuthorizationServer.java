@@ -1,6 +1,5 @@
 package cn.itcast.wanxinp2p.uaa.config;
 
-
 import cn.itcast.wanxinp2p.uaa.domain.CustomJdbcClientDetailsService;
 import cn.itcast.wanxinp2p.uaa.service.OauthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +31,9 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServer extends
-		AuthorizationServerConfigurerAdapter {
+public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
 	private TokenStore tokenStore;
@@ -44,20 +41,17 @@ public class AuthorizationServer extends
 	@Autowired
 	private JwtAccessTokenConverter accessTokenConverter;
 	
-
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 
 	@Autowired
 	private AuthorizationCodeServices authorizationCodeServices;
 
-
 	@Autowired
 	private OauthService oauthService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -66,14 +60,14 @@ public class AuthorizationServer extends
 
     @Bean
     public ClientDetailsService clientDetailsService(DataSource dataSource) {
-		ClientDetailsService clientDetailsService = new CustomJdbcClientDetailsService(dataSource);
-		((CustomJdbcClientDetailsService) clientDetailsService).setPasswordEncoder(passwordEncoder());
+		CustomJdbcClientDetailsService clientDetailsService = new CustomJdbcClientDetailsService(dataSource);
+		clientDetailsService.setPasswordEncoder(passwordEncoder());
         return clientDetailsService;
     }
     
     @Bean
    	public AuthorizationServerTokenServices tokenService() {
-       	DefaultTokenServices service=new DefaultTokenServices();
+		DefaultTokenServices service = new DefaultTokenServices();
        	service.setClientDetailsService(clientDetailsService);
        	service.setSupportRefreshToken(true);
    		service.setTokenStore(tokenStore);
@@ -87,25 +81,20 @@ public class AuthorizationServer extends
    		return service;
     }
     
-    
     @Bean
     public AuthorizationCodeServices authorizationCodeServices(DataSource dataSource) {
         return new JdbcAuthorizationCodeServices(dataSource);
     }
     
     @Override
-	public void configure(ClientDetailsServiceConfigurer clients)
-			throws Exception {
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		 clients.withClientDetails(clientDetailsService);
 	}
-  
-    
+
     @Bean
     public OAuth2RequestFactory oAuth2RequestFactory() {
         return new DefaultOAuth2RequestFactory(clientDetailsService);
     }
-    
-    
     
     @Bean
     public UserApprovalHandler userApprovalHandler() {
@@ -147,10 +136,9 @@ public class AuthorizationServer extends
 						token.setAdditionalInformation(additionalInformation);
 
 					}
-
                 }*/
                 DefaultOAuth2AccessToken token= (DefaultOAuth2AccessToken) accessToken;
-                Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
+                Map<String, Object> additionalInformation = new LinkedHashMap<>();
                 additionalInformation.put("code",0);
                 additionalInformation.put("msg","success");
                 token.setAdditionalInformation(additionalInformation);
@@ -160,14 +148,10 @@ public class AuthorizationServer extends
     }
 
 	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security)
-			throws Exception {
-		security
-		.tokenKeyAccess("permitAll()")
-		.checkTokenAccess("permitAll()")
-		.allowFormAuthenticationForClients()//允许表单认证
-		;
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		security.tokenKeyAccess("permitAll()")
+				.checkTokenAccess("permitAll()")
+				.allowFormAuthenticationForClients();//允许表单认证
 	}
 
-	
 }

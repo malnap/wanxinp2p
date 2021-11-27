@@ -59,11 +59,15 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return convert(account);
     }
 
+    /**
+     * 先根据用户名进行查询，然后再比对密码
+     *
+     * @param accountLoginDTO
+     * @return
+     */
     @Override
     public AccountDTO login(AccountLoginDTO accountLoginDTO) {
-        //1.根据用户名和密码进行一次查询
-        //2.先根据用户名进行查询，然后再比对密码
-        Account account = null;
+        Account account;
         if (accountLoginDTO.getDomain().equalsIgnoreCase("c")) {
             //如果是c端用户，用户名就是手机号
             account = getAccountByMobile(accountLoginDTO.getMobile());
@@ -71,6 +75,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
             //如果是b端用户，用户名就是账号
             account = getAccountByUsername(accountLoginDTO.getUsername());
         }
+
         if (account == null) {
             throw new BusinessException(AccountErrorCode.E_130104);
         }
