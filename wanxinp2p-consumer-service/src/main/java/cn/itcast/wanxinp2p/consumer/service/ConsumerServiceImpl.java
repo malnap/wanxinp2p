@@ -15,12 +15,16 @@ import cn.itcast.wanxinp2p.consumer.entity.Consumer;
 import cn.itcast.wanxinp2p.consumer.mapper.ConsumerMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.dromara.hmily.annotation.Hmily;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> implements ConsumerService {
 
     @Autowired
@@ -32,6 +36,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
     }
 
     @Override
+    @Hmily(confirmMethod = "confirmRegister",cancelMethod = "cancelRegister")
     public void register(ConsumerRegisterDTO consumerRegisterDTO) {
         if (checkMobile(consumerRegisterDTO.getMobile()) == 1) {
             throw new BusinessException(ConsumerErrorCode.E_140107);
@@ -55,15 +60,34 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
     }
 
     /**
+     * 分布式事务成功后确认
+     *
+     * @param consumerRegisterDTO
+     */
+    public void confirmRegister(ConsumerRegisterDTO consumerRegisterDTO) {
+        log.info("execute confirmRegister");
+    }
+
+    /**
+     * 分布式事务失败后回滚
+     *
+     * @param consumerRegisterDTO
+     */
+    public void cancelRegister(ConsumerRegisterDTO consumerRegisterDTO) {
+        log.info("execute cancelRegister");
+        remove(Wrappers.<Consumer>lambdaQuery().eq(Consumer::getMobile, consumerRegisterDTO.getMobile()));
+    }
+
+    /**
      * 根据手机号做查询
      *
      * @param mobile
      * @return
-     */
+     **/
     private ConsumerDTO getByMobile(String mobile) {
         LambdaQueryWrapper<Consumer> lambdaQueryWrapper = new QueryWrapper<Consumer>()
-                                                    .lambda()
-                                                    .eq(Consumer::getMobile, mobile);
+                                                        .lambda()
+                                                        .eq(Consumer::getMobile, mobile);
         Consumer consumer = getOne(lambdaQueryWrapper);
         return convertToDTO(consumer);
     }
@@ -82,5 +106,4 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
         BeanUtils.copyProperties(entity, dto);
         return dto;
     }
-
 }

@@ -12,7 +12,10 @@ import cn.itcast.wanxinp2p.common.domain.BusinessException;
 import cn.itcast.wanxinp2p.common.domain.RestResponse;
 import cn.itcast.wanxinp2p.common.util.PasswordUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.dromara.hmily.annotation.Hmily;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
  * @Created by maodaiyu on 2021/11/22 下午9:35
  */
 @Service
+@Slf4j
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
 
     @Autowired
@@ -46,6 +50,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
 
     @Override
+    @Hmily(confirmMethod = "confirmRegister", cancelMethod = "cancelRegister")
     public AccountDTO register(AccountRegisterDTO accountRegisterDTO) {
         Account account = new Account();
         account.setUsername(accountRegisterDTO.getUsername());
@@ -57,6 +62,25 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         account.setDomain("c");
         save(account);
         return convert(account);
+    }
+
+    /**
+     * 分布式事务成功后确认
+     *
+     * @param registerDTO
+     */
+    public void confirmRegister(AccountRegisterDTO registerDTO) {
+        log.info("execute confirmRegister");
+    }
+
+    /**
+     * 分布式事务成功后回滚
+     *
+     * @param registerDTO
+     */
+    public void cancelRegister(AccountRegisterDTO registerDTO) {
+        log.info("execute cancelRegister");
+        remove(Wrappers.<Account>lambdaQuery().eq(Account::getUsername, registerDTO.getUsername()));
     }
 
     /**
