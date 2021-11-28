@@ -12,11 +12,14 @@ import java.util.Base64;
 public class RSAUtil {
 
 	public static final String SIGN_ALGORITHMS = "SHA1WithRSA";
-	final static Base64.Decoder decoder = Base64.getDecoder();
-	final static Base64.Encoder encoder = Base64.getEncoder();
+
+	public final static Base64.Decoder decoder = Base64.getDecoder();
+
+	public final static Base64.Encoder encoder = Base64.getEncoder();
 
 	/**
 	 * RSA签名
+	 *
 	 * @param content 待签名数据
 	 * @param privateKey 商户私钥
 	 * @param input_charset 编码格式
@@ -45,6 +48,7 @@ public class RSAUtil {
 
 	/**
 	 * RSA验签名检查
+	 *
 	 * @param content 待签名数据
 	 * @param sign 签名值
 	 * @param public_key 公钥
@@ -75,6 +79,7 @@ public class RSAUtil {
 
 	/**
 	 * 解密
+	 *
 	 * @param content 密文
 	 * @param private_key 商户私钥
 	 * @param input_charset 编码格式
@@ -113,6 +118,7 @@ public class RSAUtil {
 
 	/**
 	 * 得到私钥
+	 *
 	 * @param key 密钥字符串（经过base64编码）
 	 * @throws Exception
 	 */
@@ -132,7 +138,12 @@ public class RSAUtil {
 	}
 
 
-	//生成密钥对
+	/**
+	 * 生成密钥对
+	 *
+	 * @return
+	 * @throws Exception
+	 */
 	public static KeyPair getKeyPair() throws Exception {
 		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 		keyGen.initialize(512); //可以理解为：加密后的密文长度，实际原文要小些 越大 加密解密越慢
@@ -161,9 +172,7 @@ public class RSAUtil {
         System.out.println("-----------------privateKey--------------------- ");
         System.out.println(Base64.encode(privateKey.getEncoded()));*/
 
-
 		String content = "加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890加密原文1234567890";
-
 
 		System.out.println("-----------------p2p向存管发送数据--------------------- ");
 		String signature = RSAUtil.sign(content, p2p_privateKey, "utf-8");
@@ -174,7 +183,6 @@ public class RSAUtil {
 			System.out.println("验证签名失败！");
 		}
 
-
 		System.out.println("-----------------存管向p2p返回数据--------------------- ");
 		String signature1 = RSAUtil.sign(content, depository_privateKey, "utf-8");
 		System.out.println("生成签名,原文为：" + content);
@@ -183,7 +191,6 @@ public class RSAUtil {
 		} else {
 			System.out.println("验证签名失败！");
 		}
-
 	}
 
 }

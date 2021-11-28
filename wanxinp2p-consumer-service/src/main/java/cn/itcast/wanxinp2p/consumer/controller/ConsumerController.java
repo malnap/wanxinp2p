@@ -2,8 +2,11 @@ package cn.itcast.wanxinp2p.consumer.controller;
 
 import cn.itcast.wanxinp2p.api.consumer.ConsumerAPI;
 import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRegisterDTO;
+import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRequest;
+import cn.itcast.wanxinp2p.api.depository.GatewayRequest;
 import cn.itcast.wanxinp2p.common.domain.RestResponse;
 import cn.itcast.wanxinp2p.common.util.EncryptUtil;
+import cn.itcast.wanxinp2p.consumer.common.SecurityUtil;
 import cn.itcast.wanxinp2p.consumer.service.ConsumerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,5 +38,15 @@ public class ConsumerController implements ConsumerAPI {
     @ApiImplicitParam(name = "jsonToken", value = "访问令牌", required = true, dataType = "String")
     public RestResponse<String> testResources(String jsonToken) {
         return RestResponse.success(EncryptUtil.decodeUTF8StringBase64(jsonToken));
+    }
+
+    @PostMapping("/my/consumers")
+    @ApiOperation("生成开户请求数据")
+    @ApiImplicitParam(name = "consumerRequest", value = "开户信息", required = true,
+            dataType = "ConsumerRequest", paramType = "body")
+    public RestResponse<GatewayRequest> createConsumer(@RequestBody ConsumerRequest consumerRequest) {
+        // 由于consumerRequest里没有手机号这些信息，需要从认证授权框架取
+        consumerRequest.setMobile(SecurityUtil.getUser().getMobile());
+        return consumerService.createConsumer(consumerRequest);
     }
 }
