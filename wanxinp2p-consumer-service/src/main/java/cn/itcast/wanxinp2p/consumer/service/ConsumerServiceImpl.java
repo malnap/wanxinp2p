@@ -109,7 +109,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
 
         // 判断卡是否被绑定过
         BankCardDTO bankCardDTO = bankCardService.getByCardNumber(consumerRequest.getCardNumber());
-        if (bankCardDTO != null || bankCardDTO.getStatus() == StatusCode.STATUS_IN.getCode()) {
+        if (bankCardDTO != null && bankCardDTO.getStatus() == StatusCode.STATUS_IN.getCode()) {
             throw new BusinessException(ConsumerErrorCode.E_140151);
         }
 

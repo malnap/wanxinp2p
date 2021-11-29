@@ -27,5 +27,4 @@ public class SecurityUtil {
 		}
 		return new LoginUser();
 	}
-
 }

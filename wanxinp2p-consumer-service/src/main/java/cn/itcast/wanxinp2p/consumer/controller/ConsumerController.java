@@ -6,7 +6,6 @@ import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRequest;
 import cn.itcast.wanxinp2p.api.depository.GatewayRequest;
 import cn.itcast.wanxinp2p.common.domain.RestResponse;
 import cn.itcast.wanxinp2p.common.util.EncryptUtil;
-import cn.itcast.wanxinp2p.consumer.common.SecurityUtil;
 import cn.itcast.wanxinp2p.consumer.service.ConsumerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,7 +45,7 @@ public class ConsumerController implements ConsumerAPI {
             dataType = "ConsumerRequest", paramType = "body")
     public RestResponse<GatewayRequest> createConsumer(@RequestBody ConsumerRequest consumerRequest) {
         // 由于consumerRequest里没有手机号这些信息，需要从认证授权框架取
-        consumerRequest.setMobile(SecurityUtil.getUser().getMobile());
+//        consumerRequest.setMobile(SecurityUtil.getUser().getMobile());
         return consumerService.createConsumer(consumerRequest);
     }
 }
