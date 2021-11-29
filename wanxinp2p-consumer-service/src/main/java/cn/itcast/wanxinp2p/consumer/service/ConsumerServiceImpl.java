@@ -7,9 +7,11 @@ import cn.itcast.wanxinp2p.api.consumer.model.ConsumerDTO;
 import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRegisterDTO;
 import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRequest;
 import cn.itcast.wanxinp2p.api.depository.GatewayRequest;
+import cn.itcast.wanxinp2p.api.depository.model.DepositoryConsumerResponse;
 import cn.itcast.wanxinp2p.common.domain.BusinessException;
 import cn.itcast.wanxinp2p.common.domain.CodePrefixCode;
 import cn.itcast.wanxinp2p.common.domain.CommonErrorCode;
+import cn.itcast.wanxinp2p.common.domain.DepositoryReturnCode;
 import cn.itcast.wanxinp2p.common.domain.RestResponse;
 import cn.itcast.wanxinp2p.common.domain.StatusCode;
 import cn.itcast.wanxinp2p.common.util.CodeNoUtil;
@@ -147,6 +149,29 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
     }
 
     /**
+     * 获取绑卡状态，更新开户结果，更新银行卡信息
+     * @param response
+     * @return
+     */
+    @Override
+    @Transactional
+    public Boolean modifyResult(DepositoryConsumerResponse response) {
+        int status = DepositoryReturnCode.RETURN_CODE_00000.getCode().equals(response.getRespCode())
+                ? StatusCode.STATUS_IN.getCode() :StatusCode.STATUS_FAIL.getCode();
+
+        Consumer consumer = getByRequestNo(response.getRequestNo());
+        update(Wrappers.<Consumer>lambdaUpdate().eq(Consumer::getId, consumer.getId())
+                                                .set(Consumer::getIsBindCard, status)
+                                                .set(Consumer::getStatus, status));
+
+        return bankCardService.update(Wrappers.<BankCard>lambdaUpdate()
+                    .eq(BankCard::getConsumerId, consumer.getId())
+                    .set(BankCard::getStatus, status)
+                    .set(BankCard::getBankCode, response.getBankCode())
+                    .set(BankCard::getBankName, response.getBankName()));
+    }
+
+    /**
      * 根据手机号做查询
      *
      * @param mobile
@@ -158,6 +183,16 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
                                                         .eq(Consumer::getMobile, mobile);
         Consumer consumer = getOne(lambdaQueryWrapper);
         return convertToDTO(consumer);
+    }
+
+    /**
+     * 根据requestNo查询
+     *
+     * @param requestNo
+     * @return
+     */
+    private Consumer getByRequestNo(String requestNo) {
+        return getOne(Wrappers.<Consumer>lambdaQuery().eq(Consumer::getRequestNo, requestNo));
     }
 
     /**
