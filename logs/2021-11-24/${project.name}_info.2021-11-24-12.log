@@ -1,9 +1,0 @@
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:40:56,758 INFO [DiscoveryClient-HeartbeatExecutor-0][DiscoveryClient.java:850] - DiscoveryClient_GATEWAY-SERVER/gateway-server:192.168.2.8:53010 - Re-registering apps/GATEWAY-SERVER
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:40:56,761 INFO [DiscoveryClient-HeartbeatExecutor-0][DiscoveryClient.java:826] - DiscoveryClient_GATEWAY-SERVER/gateway-server:192.168.2.8:53010: registering service...
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:40:56,770 INFO [DiscoveryClient-HeartbeatExecutor-0][DiscoveryClient.java:835] - DiscoveryClient_GATEWAY-SERVER/gateway-server:192.168.2.8:53010 - registration status: 204
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:46:03,985 INFO [DiscoveryClient-HeartbeatExecutor-0][DiscoveryClient.java:850] - DiscoveryClient_GATEWAY-SERVER/gateway-server:192.168.2.8:53010 - Re-registering apps/GATEWAY-SERVER
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:46:03,985 INFO [DiscoveryClient-HeartbeatExecutor-0][DiscoveryClient.java:826] - DiscoveryClient_GATEWAY-SERVER/gateway-server:192.168.2.8:53010: registering service...
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:46:03,988 INFO [DiscoveryClient-HeartbeatExecutor-0][DiscoveryClient.java:835] - DiscoveryClient_GATEWAY-SERVER/gateway-server:192.168.2.8:53010 - registration status: 204
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:47:17,066 INFO [AsyncResolver-bootstrap-executor-0][ConfigClusterResolver.java:43] - Resolving eureka endpoints via configuration
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:52:17,079 INFO [AsyncResolver-bootstrap-executor-0][ConfigClusterResolver.java:43] - Resolving eureka endpoints via configuration
-[${project.name}][${env:SERVER_PORT}] 2021-11-24 13:57:17,085 INFO [AsyncResolver-bootstrap-executor-0][ConfigClusterResolver.java:43] - Resolving eureka endpoints via configuration
