@@ -1,0 +1,7 @@
+[${project.name}][${env:SERVER_PORT}] 2021-11-28 05:11:28,050 INFO [hmilyTransaction-hmily-transaction-self-recovery-36][LogUtil.java:87] - self recovery execute delayTime:60
+[${project.name}][${env:SERVER_PORT}] 2021-11-28 05:11:43,668 INFO [NettyClientSelector_1][Slf4jLoggerFactory.java:95] - closeChannel: close the connection to remote address[] result: true
+[${project.name}][${env:SERVER_PORT}] 2021-11-28 05:11:43,668 INFO [NettyClientSelector_1][Slf4jLoggerFactory.java:95] - closeChannel: close the connection to remote address[] result: true
+[${project.name}][${env:SERVER_PORT}] 2021-11-28 05:11:46,024 WARN [HikariPool-1 housekeeper][HikariPool.java:766] - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h49m23s247ms).
+[${project.name}][${env:SERVER_PORT}] 2021-11-28 05:12:13,658 INFO [NettyClientSelector_1][Slf4jLoggerFactory.java:95] - closeChannel: close the connection to remote address[] result: true
+[${project.name}][${env:SERVER_PORT}] 2021-11-28 05:12:13,663 INFO [NettyClientSelector_1][Slf4jLoggerFactory.java:95] - closeChannel: close the connection to remote address[] result: true
+[${project.name}][${env:SERVER_PORT}] 2021-11-28 05:12:14,831 INFO [hmilyTransaction-hmily-transaction-self-recovery-55][LogUtil.java:87] - self recovery execute delayTime:60
