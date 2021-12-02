@@ -177,7 +177,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
      * @param mobile
      * @return
      **/
-    private ConsumerDTO getByMobile(String mobile) {
+    public ConsumerDTO getByMobile(String mobile) {
         LambdaQueryWrapper<Consumer> lambdaQueryWrapper = new QueryWrapper<Consumer>()
                                                         .lambda()
                                                         .eq(Consumer::getMobile, mobile);

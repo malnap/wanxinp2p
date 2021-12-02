@@ -1,10 +1,8 @@
 package cn.itcast.wanxinp2p.depository.common.intercept;
 
-
 import cn.itcast.wanxinp2p.common.domain.BusinessException;
 import cn.itcast.wanxinp2p.common.domain.CommonErrorCode;
 import cn.itcast.wanxinp2p.common.domain.RestResponse;
-import cn.itcast.wanxinp2p.depository.common.constant.DepositoryErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -17,7 +15,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -43,7 +40,7 @@ public class GlobalExceptionHandler {
             return new RestResponse<Nullable>(415, "不支持媒体类型");
         }
         LOGGER.error("【系统异常】{}", e);
-        return new RestResponse<Nullable>(CommonErrorCode.UNKOWN.getCode(), CommonErrorCode.UNKOWN.getDesc());
+        return new RestResponse<Nullable>(CommonErrorCode.UNKNOWN.getCode(), CommonErrorCode.UNKNOWN.getDesc());
     }
 
 }

@@ -1,5 +1,6 @@
 package cn.itcast.wanxinp2p.consumer.service;
 
+import cn.itcast.wanxinp2p.api.consumer.model.ConsumerDTO;
 import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRegisterDTO;
 import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRequest;
 import cn.itcast.wanxinp2p.api.depository.GatewayRequest;
@@ -41,5 +42,13 @@ public interface ConsumerService extends IService<Consumer> {
      * @return
      */
     Boolean modifyResult(DepositoryConsumerResponse response);
+
+    /**
+     * 根据手机号查询
+     *
+     * @param mobile
+     * @return
+     */
+    ConsumerDTO getByMobile(String mobile);
 
 }

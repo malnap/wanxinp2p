@@ -11,11 +11,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients(basePackages = {"cn.itcast.wanxinp2p.transaction.agent"})
 public class TransactionService {
 
-
     public static void main(String[] args) {
         SpringApplication.run(TransactionService.class, args);
     }
-
 
 }
 

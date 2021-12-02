@@ -1,5 +1,6 @@
 package cn.itcast.wanxinp2p.api.consumer;
 
+import cn.itcast.wanxinp2p.api.consumer.model.ConsumerDTO;
 import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRegisterDTO;
 import cn.itcast.wanxinp2p.api.consumer.model.ConsumerRequest;
 import cn.itcast.wanxinp2p.api.depository.GatewayRequest;
@@ -25,4 +26,18 @@ public interface ConsumerAPI {
      * @return
      */
     RestResponse<GatewayRequest> createConsumer(ConsumerRequest consumerRequest);
+
+    /**
+     * 保存标的时，需要用到当前登录用户的一些信息
+     *
+     * @return
+     */
+    RestResponse<ConsumerDTO> getCurrConsumer(String mobile);
+
+    /**
+     * 发标时，前端需要判断当前登录用户是否已经开户，借款金额是否超标等信息
+     *
+     * @return
+     */
+    RestResponse<ConsumerDTO> getMyConsumer();
 }

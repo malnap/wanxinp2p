@@ -11,12 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * <p>
  * 标的信息表
- * </p>
- *
- * @author dev
- * @since 2019-05-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -104,7 +99,7 @@ public class Project implements Serializable {
     private BigDecimal amount;
 
     /**
-     * 标的状态
+     * 标的状态，募集中
      */
     @TableField("PROJECT_STATUS")
     private String projectStatus;
@@ -132,6 +127,5 @@ public class Project implements Serializable {
      */
     @TableField("IS_ASSIGNMENT")
     private Integer isAssignment;
-
 
 }

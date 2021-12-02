@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 /**
- * <P>
  * 本类用于获取配置文件中的配置, 封装成service方便调用
- * </p>
  */
 @Service
 @EnableApolloConfig
 public class ConfigService {
+
     @ApolloConfig
     private Config config;
 
@@ -77,6 +76,5 @@ public class ConfigService {
         // 如果配置文件中没有获取到, 这里使用默认值: 100.0, 有则使用配置文件中的
         return new BigDecimal(config.getProperty("mini.investment.amount", "100.0"));
     }
-
 
 }
