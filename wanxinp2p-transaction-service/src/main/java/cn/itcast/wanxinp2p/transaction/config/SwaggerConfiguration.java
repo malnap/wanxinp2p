@@ -1,4 +1,3 @@
-
 package cn.itcast.wanxinp2p.transaction.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
